@@ -1,27 +1,28 @@
-name: Deploy Hugo to 2NT FTP
+
+name: Build and Deploy Hugo to FTP
 
 on:
   schedule:
     - cron: '0 0 * * *'  # Menjadwalkan deploy setiap tengah malam
-  workflow_dispatch:       # Opsi untuk menjalankan workflow secara manual
+  workflow_dispatch:
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout kode
+      - name: Checkout Repo
         uses: actions/checkout@v3
-      
-      - name: Instal Hugo
+
+      - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2
         with:
           hugo-version: 'latest'
 
-      - name: Build Hugo site
+      - name: Run Hugo
         run: hugo --minify
 
-      - name: Upload ke FTP 2NT
+      - name: Deploy to FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: "ftp-server011.web.2nt.com"
@@ -29,7 +30,8 @@ jobs:
           password: "d0!p0#&tlP"
           local-dir: ./public/
           server-dir: /
-          timeout: 600  # Waktu tunggu lebih lama (10 menit)
-          passive: true  # Gunakan mode pasif
-          log-level: verbose  # Untuk debugging lebih detail
-          port: 21  # Port FTP default
+          timeout: 600  # Timeout lebih panjang
+          retries: 5  # Mengulang hingga 5 kali jika gagal
+          retry-delay: 10  # Delay antara percobaan ulang (10 detik)
+          log-level: verbose  # Aktifkan log untuk informasi lebih detail
+          passive: true  # Mode pasif, lebih stabil dalam banyak kasus
