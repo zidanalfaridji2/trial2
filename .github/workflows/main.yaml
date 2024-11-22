@@ -22,13 +22,10 @@ jobs:
         run: hugo --minify
 
       - name: Deploy to FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-      - name: Deploy to FTP
         run: |
           for i in {1..5}; do
             echo "Attempt $i to upload"
-            npx ftp-deploy -s ./public -h ftp-server011.web.2nt.com -u ${{ secrets.FTP_USERNAME }} -p ${{ secrets.FTP_PASSWORD }} -d / -t 600
+            npx ftp-deploy -s ./public -h ftp-server011.web.2nt.com -u spruchexsc -p 'd0!p0#&tlP' -d / -t 600
             if [ $? -eq 0 ]; then
               echo "Upload successful on attempt $i"
               break
@@ -37,13 +34,3 @@ jobs:
               sleep 10
             fi
           done
-        env:
-          username: "spruchexsc"
-          password: "d0!p0#&tlP"
-          local-dir: ./public/
-          server-dir: /
-          timeout: 600  # Timeout lebih panjang
-          retries: 5  # Mengulang hingga 5 kali jika gagal
-          retry-delay: 10  # Delay antara percobaan ulang (10 detik)
-          log-level: verbose  # Aktifkan log untuk informasi lebih detail
-          passive: true 
