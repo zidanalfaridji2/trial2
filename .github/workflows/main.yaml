@@ -32,3 +32,7 @@ jobs:
           log-level: verbose  # Tambahkan log lebih rinci
           passive: true          # Mengaktifkan mode pasif
           keepalive: true
+          retry-delay: 10           # Delay sebelum mencoba ulang (dalam detik)
+          retries: 5                # Jumlah retry jika koneksi terputus
+          protocol: ftps
+          log-level: verbose
