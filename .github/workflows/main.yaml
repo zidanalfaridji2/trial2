@@ -1,30 +1,31 @@
-name: Build With Cron
+name: Deploy Hugo to 2NT FTP
+
 on:
   schedule:
-    - cron: "0 0 * * *"
-  workflow_dispatch:
+    - cron: '0 0 * * *'  # Menjadwalkan deploy setiap tengah malam
+  workflow_dispatch:       # Opsi untuk menjalankan workflow secara manual
 
 jobs:
   build-and-deploy:
-    name: Build and Deploy
-    runs-on: [ ubuntu-latest ]
-    steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v2
+    runs-on: ubuntu-latest
 
-      - name: Setup Hugo
+    steps:
+      - name: Checkout kode
+        uses: actions/checkout@v3
+      
+      - name: Instal Hugo
         uses: peaceiris/actions-hugo@v2
         with:
-          hugo-version: "0.88.0"
+          hugo-version: 'latest'
 
-      - name: Run Hugo
+      - name: Build Hugo site
         run: hugo --minify
 
-      - name: 'Deploy to Netlify'
-        # uses: jsmrcaga/action-netlify-deploy@v1.2.0
-        env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-          NETLIFY_DEPLOY_TO_PROD: true
-          build_directory: 'public'
-        run: netlify deploy --prod --timeout=9999
+      - name: Upload ke FTP 2NT
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: "ftp-server011.web.2nt.com"     # Server FTP 2NT
+          username: "spruchexsc"                  # Username FTP
+          password: "d0!p0#&tlP"                  # Password FTP
+          local-dir: ./public/                    # Folder hasil build Hugo
+          server-dir: /                           # Direktori tujuan di FTP
