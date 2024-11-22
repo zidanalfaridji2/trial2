@@ -33,4 +33,3 @@ jobs:
           retry-delay: 10
           retries: 5
           timeout: 999  # Waktu tunggu untuk koneksi (dalam detik)
-          passive: false  # Coba dengan mode aktif
