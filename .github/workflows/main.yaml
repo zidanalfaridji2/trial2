@@ -2,8 +2,8 @@ name: Build and Deploy Hugo to FTP
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # Menjadwalkan deploy setiap tengah malam
-  workflow_dispatch:
+    - cron: '0 0 * * *'  # Schedule deploy every midnight
+  workflow_dispatch:  # Allow manual triggering of the workflow
 
 jobs:
   build-and-deploy:
@@ -22,13 +22,14 @@ jobs:
         run: hugo --minify
 
       - name: Install FTP Deploy npm package
-        run: npm install -g ftp-deploy
+        run: |
+          npm install -g ftp-deploy
 
-      - name: Deploy to FTP
+      - name: Deploy to FTP with retries
         run: |
           for i in {1..5}; do
             echo "Attempt $i to upload"
-            ftp-deploy -s ./public -h ftp-server011.web.2nt.com -u spruchexsc -p 'd0!p0#&tlP' -d / -t 600
+            npx ftp-deploy -s ./public -h ftp-server011.web.2nt.com -u spruchexsc -p 'd0!p0#&tlP' -d / -t 600
             if [ $? -eq 0 ]; then
               echo "Upload successful on attempt $i"
               break
