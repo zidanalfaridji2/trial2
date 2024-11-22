@@ -30,3 +30,4 @@ jobs:
           local-dir: ./public/                    # Folder hasil build Hugo
           server-dir: /                           # Direktori tujuan di FTP
           log-level: verbose  # Tambahkan log lebih rinci
+          passive: true          # Mengaktifkan mode pasif
