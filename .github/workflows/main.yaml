@@ -24,14 +24,12 @@ jobs:
       - name: Upload ke FTP 2NT
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          server: "ftp-server011.web.2nt.com"     # Server FTP 2NT
-          username: "spruchexsc"                  # Username FTP
-          password: "d0!p0#&tlP"                  # Password FTP
-          local-dir: ./public/                    # Folder hasil build Hugo
-          server-dir: /                           # Direktori tujuan di FTP
-          log-level: verbose  # Tambahkan log lebih rinci
-          passive: true          # Mengaktifkan mode pasif
-          keepalive: true
+          server: "ftp-server011.web.2nt.com"
+          username: "spruchexsc"
+          password: "d0!p0#&tlP"
+          local-dir: ./public/
+          server-dir: /
+          passive: true
+          keepalive: true           # Memastikan koneksi tetap aktif
           retry-delay: 10           # Delay sebelum mencoba ulang (dalam detik)
           retries: 5                # Jumlah retry jika koneksi terputus
-          log-level: verbose
