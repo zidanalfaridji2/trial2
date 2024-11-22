@@ -1,35 +1,31 @@
-[build]
-publish = "public"
-command = "hugo --gc --minify"
+name: Deploy Hugo to 2NT FTP
 
-[context.production.environment]
-HUGO_VERSION = "0.104.3"
-HUGO_ENV = "production"
-HUGO_ENABLEGITINFO = "true"
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Menjadwalkan deploy setiap tengah malam
+  workflow_dispatch:       # Opsi untuk menjalankan workflow secara manual
 
-[context.split1]
-command = "hugo --gc --minify --enableGitInfo"
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
 
-[context.split1.environment]
-HUGO_VERSION = "0.104.3"
-HUGO_ENV = "production"
+    steps:
+      - name: Checkout kode
+        uses: actions/checkout@v3
+      
+      - name: Instal Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: 'latest'
 
-[context.deploy-preview]
-command = "hugo --gc --minify --buildFuture -b $DEPLOY_PRIME_URL"
+      - name: Build Hugo site
+        run: hugo --minify
 
-[context.deploy-preview.environment]
-HUGO_VERSION = "0.104.3"
-
-[context.branch-deploy]
-command = "hugo --gc --minify -b $DEPLOY_PRIME_URL"
-
-[context.branch-deploy.environment]
-HUGO_VERSION = "0.104.3"
-
-[context.next.environment]
-HUGO_ENABLEGITINFO = "true"
-
-[[redirects]]
-from = "/npmjs/*"
-to = "/npmjs/"
-status = 200
+      - name: Upload ke FTP 2NT
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: "ftp-server011.web.2nt.com"     # Server FTP 2NT
+          username: "spruchexsc"                  # Username FTP
+          password: "d0!p0#&tlP"                  # Password FTP
+          local-dir: ./public/                    # Folder hasil build Hugo
+          server-dir: /                           # Direktori tujuan di FTP
