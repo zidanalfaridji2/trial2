@@ -33,4 +33,4 @@ jobs:
           retries: 5  # Mengulang hingga 5 kali jika gagal
           retry-delay: 10  # Delay antara percobaan ulang (10 detik)
           log-level: verbose  # Aktifkan log untuk informasi lebih detail
-          passive: true  # Mode pasif, lebih stabil dalam banyak kasus
+          passive: true 
