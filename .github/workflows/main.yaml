@@ -24,7 +24,20 @@ jobs:
       - name: Deploy to FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          server: "ftp-server011.web.2nt.com"  # Sesuaikan dengan server FTP Anda
+      - name: Deploy to FTP
+        run: |
+          for i in {1..5}; do
+            echo "Attempt $i to upload"
+            npx ftp-deploy -s ./public -h ftp-server011.web.2nt.com -u ${{ secrets.FTP_USERNAME }} -p ${{ secrets.FTP_PASSWORD }} -d / -t 600
+            if [ $? -eq 0 ]; then
+              echo "Upload successful on attempt $i"
+              break
+            else
+              echo "Upload failed on attempt $i, retrying in 10 seconds..."
+              sleep 10
+            fi
+          done
+        env:
           username: "spruchexsc"
           password: "d0!p0#&tlP"
           local-dir: ./public/
