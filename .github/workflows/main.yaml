@@ -21,8 +21,9 @@ jobs:
       - name: Run Hugo
         run: hugo --minify
 
-      - name: Install FTP Deploy npm package
+      - name: Install npm and ftp-deploy
         run: |
+          npm install -g npm@latest
           npm install -g ftp-deploy
 
       - name: Deploy to FTP with retries
