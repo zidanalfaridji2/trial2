@@ -21,16 +21,16 @@ jobs:
       - name: Build Hugo site
         run: hugo --minify
 
-      - name: Upload ke FTP 2NT
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-        with:
-          server: "ftp-server011.web.2nt.com"
-          username: "spruchexsc"
-          password: "d0!p0#&tlP"
-          local-dir: ./public/
-          server-dir: /
-          passive: true
-          keepalive: true           # Memastikan koneksi tetap aktif
-          retry-delay: 10           # Delay sebelum mencoba ulang (dalam detik)
-          retries: 5                # Jumlah retry jika koneksi terputus
-          timeout: 3000
+    - name: Upload ke FTP 2NT
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      with:
+        server: "ftp-server011.web.2nt.com"    # Pastikan menggunakan nama host yang sesuai
+        username: "spruchexsc"
+        password: "d0!p0#&tlP"
+        local-dir: ./public/
+        server-dir: /
+        passive: false    # Gunakan mode aktif (Active Mode)
+        retry-delay: 10
+        retries: 5
+        timeout: 300  # Waktu tunggu untuk koneksi (dalam detik)
+
