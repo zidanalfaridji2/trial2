@@ -33,3 +33,4 @@ jobs:
           keepalive: true           # Memastikan koneksi tetap aktif
           retry-delay: 10           # Delay sebelum mencoba ulang (dalam detik)
           retries: 5                # Jumlah retry jika koneksi terputus
+          timeout: 300
