@@ -29,6 +29,7 @@ jobs:
           password: "d0!p0#&tlP"
           local-dir: ./public/
           server-dir: /
-          timeout: 1200  # Waktu tunggu lebih lama (20 menit)
+          timeout: 600  # Waktu tunggu lebih lama (10 menit)
+          passive: true  # Gunakan mode pasif
           log-level: verbose  # Untuk debugging lebih detail
           port: 21  # Port FTP default
