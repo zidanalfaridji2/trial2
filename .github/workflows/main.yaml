@@ -23,7 +23,7 @@ jobs:
 
       - name: Install `ftp-deploy` dependencies
         run: |
-          npm ci --prefix /home/runner/work/_temp/  # Install in a temporary directory to avoid permission issues
+          npm install --prefix /home/runner/work/_temp/  # Install dependencies without requiring package-lock.json
 
       - name: Deploy to FTP with retries
         run: |
