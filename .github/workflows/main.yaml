@@ -32,4 +32,4 @@ jobs:
           passive: false    # Gunakan mode aktif (Active Mode)
           retry-delay: 10
           retries: 5
-          timeout: 999  # Waktu tunggu untuk koneksi (dalam detik)
+          timeout: 99999  # Waktu tunggu untuk koneksi (dalam detik)
