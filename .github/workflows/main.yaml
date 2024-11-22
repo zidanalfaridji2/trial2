@@ -24,9 +24,6 @@ jobs:
     - name: Upload ke FTP 2NT
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
-    - name: Upload ke FTP 2NT
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-      with:
         server: "ftp-server011.web.2nt.com"    # Pastikan menggunakan nama host yang sesuai
         username: "spruchexsc"
         password: "d0!p0#&tlP"
