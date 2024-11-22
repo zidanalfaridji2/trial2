@@ -33,4 +33,5 @@ jobs:
         retry-delay: 10
         retries: 5
         timeout: 300  # Waktu tunggu untuk koneksi (dalam detik)
+        log-level: verbose   # Aktivasi log level verbose untuk informasi lebih detail
 
