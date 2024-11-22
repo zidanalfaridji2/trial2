@@ -21,11 +21,14 @@ jobs:
       - name: Run Hugo
         run: hugo --minify
 
+      - name: Install FTP Deploy npm package
+        run: npm install -g ftp-deploy
+
       - name: Deploy to FTP
         run: |
           for i in {1..5}; do
             echo "Attempt $i to upload"
-            npx ftp-deploy -s ./public -h ftp-server011.web.2nt.com -u spruchexsc -p 'd0!p0#&tlP' -d / -t 600
+            ftp-deploy -s ./public -h ftp-server011.web.2nt.com -u spruchexsc -p 'd0!p0#&tlP' -d / -t 600
             if [ $? -eq 0 ]; then
               echo "Upload successful on attempt $i"
               break
