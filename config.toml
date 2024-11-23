@@ -1,7 +1,7 @@
 # default config
 baseurl = "https://gotcxx.pages.dev"
 languageCode = "en-us"
-title = "Sprüche"
+title = "Gif Ideas"
 theme = "parsa-hugo"
 summaryLength = "10"
 layout = "1"
