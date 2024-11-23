@@ -1,5 +1,5 @@
 # default config
-baseurl = "https://spruchexsc.web.2nt.com"
+baseurl = "https://gotcxx.pages.dev"
 languageCode = "en-us"
 title = "Sprüche"
 theme = "parsa-hugo"
