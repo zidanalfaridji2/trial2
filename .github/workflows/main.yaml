@@ -1,40 +1,30 @@
-name: Build and Deploy Hugo to FTP
+name: Deploy to Cloudflare Pages
 
 on:
-  schedule:
-    - cron: '0 0 * * *'  # Schedule deploy every midnight
-  workflow_dispatch:  # Allow manual triggering of the workflow
+  push:
+    branches:
+      - main  # Sesuaikan dengan branch utama Anda
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repo
+      - name: Checkout Repository
         uses: actions/checkout@v3
 
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2
         with:
-          hugo-version: 'latest'
+          hugo-version: '0.115.0'  # Sesuaikan dengan versi yang Anda gunakan
 
-      - name: Run Hugo
-        run: hugo --minify
+      - name: Build Hugo Site
+        run: hugo
 
-      - name: Install `ftp-deploy` dependencies
-        run: |
-          npm install --prefix /home/runner/work/_temp/  # Install dependencies without requiring package-lock.json
-
-      - name: Deploy to FTP with retries
-        run: |
-          for attempt in {1..5}; do
-            echo "Attempt $attempt to upload"
-            npx ftp-deploy -s ./public -h ftp-server011.web.2nt.com -u spruchexsc -p 'd0!p0#&tlP' -d / -t 600
-            if [ $? -eq 0 ]; then
-              echo "Upload successful on attempt $attempt"
-              break
-            else
-              echo "Upload failed on attempt $attempt, retrying in 10 seconds..."
-              sleep 10
-            fi
-          done
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: 3IZoL8cv8fUZWP9zlb4r0Gbtx60nmoJk0ulUn6TC
+          accountId: a20e917fb1abad3e0865636620e04c90
+          projectName: 'gotcxx'  # Ganti dengan nama proyek Cloudflare Pages Anda
+          directory: 'public'
