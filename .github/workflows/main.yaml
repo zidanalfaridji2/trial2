@@ -1,10 +1,9 @@
 name: Deploy to Cloudflare Pages
 
 on:
-  push:
-    branches:
-      - main  # Sesuaikan dengan branch utama Anda
-
+  schedule:
+    - cron: '0 0 * * *'  # Setiap malam pukul 00:00 UTC
+    
 jobs:
   deploy:
     runs-on: ubuntu-latest
